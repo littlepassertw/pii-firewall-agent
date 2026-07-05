@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Helvetica Neue", "PingFang TC", sans-serif; }
+  .slide {
+    width: 1920px; height: 1080px;
+    background: #0f1419;
+    color: #e6e6e6;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 120px 160px;
+    position: relative;
+  }
+  .slide .kicker { color: #ff6b6b; font-size: 34px; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 36px; font-weight: 600; }
+  .slide h1 { font-size: 92px; font-weight: 700; line-height: 1.15; margin-bottom: 44px; color: #ffffff; }
+  .slide h2 { font-size: 64px; font-weight: 700; line-height: 1.2; margin-bottom: 40px; color: #ffffff; }
+  .slide p.sub { font-size: 42px; color: #9aa5b1; line-height: 1.5; max-width: 1400px; }
+  .slide ul { list-style: none; font-size: 44px; line-height: 1.9; color: #c9d1d9; }
+  .slide ul li::before { content: "— "; color: #ff6b6b; font-weight: 700; }
+  .badge { position: absolute; bottom: 60px; left: 160px; font-size: 28px; color: #566270; }
+  .accent { color: #ff6b6b; }
+  .green { color: #4ecdc4; }
+
+  .arch { display: flex; align-items: center; gap: 60px; margin-top: 30px; }
+  .box { border-radius: 24px; padding: 48px 56px; font-size: 40px; line-height: 1.6; }
+  .box .t { font-size: 46px; font-weight: 700; margin-bottom: 20px; }
+  .local { background: #14332e; border: 3px solid #4ecdc4; }
+  .cloud { background: #1d2633; border: 3px solid #5b8dee; }
+  .arrow { font-size: 56px; color: #9aa5b1; text-align: center; line-height: 1.4; }
+  .mono { font-family: "SF Mono", Menlo, monospace; font-size: 34px; color: #ffd166; }
+</style>
+</head>
+<body>
+
+<div class="slide" id="s1">
+  <div class="kicker">Kaggle × Google · AI Agents Capstone · Agents for Business</div>
+  <h1>PII Firewall Agent</h1>
+  <p class="sub">Cloud-grade AI reasoning over HR documents —<br>where the cloud <span class="accent">never sees a single piece of personal data</span>.</p>
+  <div class="badge">MCP Server · Google ADK Multi-Agent · Local NER · Security by Architecture</div>
+</div>
+
+<div class="slide" id="s2">
+  <div class="kicker">The Problem</div>
+  <h2>HR documents are exactly where AI helps most —<br>and exactly what you must not paste into a chatbot.</h2>
+  <ul>
+    <li>National IDs, salaries, addresses, exit-interview notes</li>
+    <li>Pasting a roster into a cloud LLM = a reportable data breach</li>
+    <li>Today's outcome: <span class="accent">ban AI, or quietly leak</span></li>
+  </ul>
+</div>
+
+<div class="slide" id="s3">
+  <div class="kicker">The Idea</div>
+  <h2>De-identify → cloud reasoning → re-identify</h2>
+  <div class="arch">
+    <div class="box local">
+      <div class="t">🖥️ Local MCP firewall</div>
+      detect · redact · restore<br>
+      <span class="mono">.sessions/ mapping stays here</span>
+    </div>
+    <div class="arrow">→ <span class="mono">A君, [ID-01]</span> →<br>← approved draft ←</div>
+    <div class="box cloud">
+      <div class="t">☁️ ADK agents</div>
+      coordinator · writer · auditor<br>
+      <span class="mono">placeholders only</span>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="s4">
+  <div class="kicker">Security by Architecture</div>
+  <h2>Structural guarantees, not polite prompts</h2>
+  <ul>
+    <li>One whitelist exit: <span class="mono">sanitizeForCloud()</span> — originals aren't in any schema</li>
+    <li>Least privilege: writer has <span class="accent">no tools</span>, auditor can only scan</li>
+    <li>Restore returns <span class="green">a local path</span>, never content</li>
+    <li>The claim is an <span class="green">executable test</span>: no tool response contains original PII</li>
+  </ul>
+</div>
+
+<div class="slide" id="s5">
+  <div class="kicker">The Build</div>
+  <h2>Detection engine ported from a production<br>browser extension — Taiwan-tuned</h2>
+  <ul>
+    <li>Rules + checksums · field keywords · document patterns · 41k-entry lexicons</li>
+    <li>CKIP Chinese BERT NER, fully in-process (ONNX)</li>
+    <li>Node MCP server · Google ADK 2.3 · provider-agnostic via LiteLLM</li>
+    <li>Built agentically with <span class="green">Claude Code + Antigravity</span></li>
+  </ul>
+  <div class="badge">github.com/…/pii-firewall-agent · 13 offline tests · zero real data in repo</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Helvetica Neue", sans-serif; }
+  .slide { width: 1920px; height: 1080px; background: #0f1419; color: #e6e6e6; padding: 70px 90px; }
+  .kicker { color: #ff6b6b; font-size: 30px; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 24px; font-weight: 600; }
+  h2 { font-size: 48px; color: #fff; margin-bottom: 32px; }
+  .term { background: #05070a; border: 2px solid #2a3441; border-radius: 16px; padding: 26px 30px;
+          font-family: "SF Mono", Menlo, monospace; font-size: 22px; line-height: 1.5; white-space: pre; overflow: hidden; }
+  .term .dim { color: #566270; } .term .y { color: #ffd166; } .term .g { color: #4ecdc4; } .term .r { color: #ff6b6b; }
+  .cols { display: flex; gap: 40px; }
+  .cols > div { flex: 1; }
+  .label { font-size: 30px; color: #9aa5b1; margin: 22px 0 12px; }
+</style>
+</head>
+<body>
+
+<div class="slide" id="p1">
+  <div class="kicker">Proof · Not a promise</div>
+  <h2>The only place real data ever lives — <span style="color:#4ecdc4">.sessions/ on this machine</span></h2>
+  <div class="cols">
+    <div>
+      <div class="label">$ cat .sessions/83e291ad….json <span style="color:#566270">(local only, chmod 600, gitignored)</span></div>
+      <div class="term">{
+  "sourceFile": ".../samples/resume_01.txt",
+  "mode": "letter",
+  "entries": [
+    { "original": <span class="r">"林承翰"</span>,        "placeholder": <span class="g">"A君"</span> },
+    { "original": <span class="r">"A123456789"</span>,   "placeholder": <span class="g">"[ID-01]"</span> },
+    { "original": <span class="r">"0912-345-678"</span>, "placeholder": <span class="g">"[電話-01]"</span> },
+    { "original": <span class="r">"台北市信義區松仁路 100 號 12 樓"</span>,
+                                   "placeholder": <span class="g">"[地址-01]"</span> },
+    { "original": <span class="r">"65,000 元"</span>,     "placeholder": <span class="g">"[金額-01]"</span> },
+    …14 entries
+  ]
+}</div>
+    </div>
+    <div>
+      <div class="label">stderr audit log — all the cloud was allowed to see</div>
+      <div class="term"><span class="dim">[audit]</span> ingest_and_redact → cloud payload:
+  {"redacted_text": "…姓名：<span class="g">A君</span>
+   身分證字號：<span class="g">[ID-01]</span> 手機：<span class="g">[電話-01]</span>…"}
+
+<span class="dim">[audit]</span> scan_text_for_pii → cloud payload:
+  {"clean":<span class="g">true</span>,"findings":[]}
+
+<span class="dim">[audit]</span> restore_and_export → cloud payload:
+  {"output_path":"…/output/email_final.txt",
+   "restored_count":<span class="y">14</span>}</div>
+      <div class="label">$ npm test</div>
+      <div class="term"><span class="g">✓</span> end-to-end MCP session never leaks original PII
+<span class="g">✓</span> round-trip invariant holds for all samples
+<span class="g"># pass 13  # fail 0</span>   <span class="dim">(offline, no API key)</span></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
