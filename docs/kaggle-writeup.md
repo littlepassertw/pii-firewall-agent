@@ -7,7 +7,7 @@
 
 **Title:** PII Firewall Agent — Cloud AI for HR Documents That Never Sees Personal Data
 
-**Subtitle:** A local MCP firewall lets multi-agent LLM pipelines summarize, draft and audit HR documents while every piece of personal data stays on the machine — de-identify → cloud reasoning → re-identify.
+**Subtitle:** Multi-agent HR document AI where personal data never leaves your machine.
 
 ---
 
