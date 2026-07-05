@@ -84,7 +84,7 @@ The business case is concrete: recommendation emails, interview summaries and ro
 
 ## Links
 
-- **Video (≤5 min):** [YouTube link]
+- **Video (≤5 min):** https://youtu.be/Rb-Sp0ReYw0
 - **Code:** https://github.com/littlepassertw/pii-firewall-agent
 - **Live demo:** not deployed (by design — the whole point is that it runs on *your* machine); the repo includes full setup instructions and an offline test suite.
 
