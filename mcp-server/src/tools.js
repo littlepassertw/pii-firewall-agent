@@ -66,6 +66,17 @@ export async function getRedactionSummary({ session_id }) {
   });
 }
 
+// Our own placeholder shapes (A君, B公司, [電話-01], 人員-001…). The scanner
+// must not flag these as PII — they ARE the redaction — or the auditor gets
+// stuck in an endless reject/rewrite loop over false positives.
+const PLACEHOLDER_SHAPES = [
+  /^\[(?:電話|Email|ID|統編|日期|地址|金額|帳號)-\d+\]$/,
+  /^(?:人員|機構|部門|學校|專案)-\d{3}$/,
+  /^[A-Z]{1,2}(?:君|公司|部門|學校|專案)$/
+];
+
+const isPlaceholder = (value) => PLACEHOLDER_SHAPES.some((re) => re.test(value));
+
 // scan_text_for_pii(text) — re-runs local detection on LLM-generated text so
 // the auditor can verify nothing leaked. Returns only types and counts,
 // never the matched values (returning them would itself be a leak).
@@ -73,6 +84,7 @@ export async function scanTextForPii({ text }) {
   const { items } = await detect(text);
   const byType = new Map();
   for (const item of items) {
+    if (isPlaceholder(item.original)) continue;
     byType.set(item.type, (byType.get(item.type) || 0) + 1);
   }
   const findings = Array.from(byType, ([type, count]) => ({
