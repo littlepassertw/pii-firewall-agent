@@ -1,0 +1,24 @@
+# secrets — API keys live only in agent/.env, never in the repo
+.env
+*.env
+!.env.example
+
+# local-only PII artifacts: mapping tables and restored documents
+mcp-server/.sessions/
+output/
+
+# local model cache (~100MB, downloaded on first run)
+mcp-server/.model-cache/
+
+# dependencies & runtime junk
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# video build artifacts
+video/build/
+
+# OS noise
+.DS_Store
